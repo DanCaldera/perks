@@ -12,6 +12,15 @@ function classNames(...classes) {
 export default function IndexPage() {
   const { user } = Auth.useUser()
   const [enabled, setEnabled] = useState(false)
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [referal, setReferal] = useState('')
+
+  const _sendMagicLink = async () => {
+    await supabase.auth.signIn({
+      email
+    })
+  }
 
   return (
     <div className='min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
@@ -44,6 +53,8 @@ export default function IndexPage() {
                     type='text'
                     name='email'
                     id='email'
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                     className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md'
                     placeholder='tu@ejemplo.com'
                   />
@@ -70,6 +81,8 @@ export default function IndexPage() {
                     type='text'
                     name='phone-number'
                     id='phone-number'
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
                     className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-16 sm:text-sm border-gray-300 rounded-md'
                     placeholder='(552) 987-6543'
                   />
@@ -130,6 +143,8 @@ export default function IndexPage() {
                   type='text'
                   name='referal-code'
                   id='referal-code'
+                  value={referal}
+                  onChange={e => setReferal(e.target.value.toUpperCase())}
                   className='focus:ring-indigo-500 focus:border-indigo-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md'
                   placeholder='CODE10'
                 />
@@ -149,7 +164,7 @@ export default function IndexPage() {
               </div>
               <div>
                 <button
-                  type='submit'
+                  onClick={_sendMagicLink}
                   className='w-full flex justify-center mt-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'>
                   <svg className='h-5 w-5 mr-3' viewBox='0 0 20 20' fill='white' xmlns='http://www.w3.org/2000/svg'>
                     <g clip-path='url(#clip0)'>
