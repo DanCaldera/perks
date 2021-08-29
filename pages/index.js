@@ -22,11 +22,19 @@ export default function IndexPage() {
       email
     })
 
+    console.log('user', user)
+    console.log('session', session)
     console.log('error', error)
   }
 
   const _sendSms = async () => {
     console.log('sms')
+
+    const { user, session, error } = await supabase.auth.signIn({
+      phone: `+52${phone}`
+    })
+
+    console.log(error)
   }
 
   return (
